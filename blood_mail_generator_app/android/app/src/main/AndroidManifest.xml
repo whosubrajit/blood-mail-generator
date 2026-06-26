@@ -5,6 +5,7 @@
             <data android:scheme="mailto" />
         </intent>
     </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="BUCC Blood Mail"
         android:name="${applicationName}"
