@@ -15,4 +15,4 @@ A fast, client-side web application designed for the BUCC (BRAC University Compu
 ## Reference Format
 This generator was built to ensure all outgoing HR emails match the precise formatting of the following reference email:
 
-![Sample Email](brave_screenshot_mail.google.com.png)
+![Sample Email](Sample%20Mail.png)
