@@ -169,14 +169,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     subject: previewSubject.textContent
                 }));
             } else {
-                // We are in a normal browser, open Gmail web compose
+                // We are in a normal browser
                 const subject = encodeURIComponent(previewSubject.textContent);
-                const senderEmail = document.getElementById('senderEmail')?.value?.trim();
-                let gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=gb-bucc@googlegroups.com&su=${subject}`;
-                if (senderEmail) {
-                    gmailUrl += `&authuser=${encodeURIComponent(senderEmail)}`;
+                
+                // If on mobile, use mailto: to trigger the native Gmail/Email app
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    window.location.href = `mailto:gb-bucc@googlegroups.com?subject=${subject}`;
+                } else {
+                    // On desktop, force Google Workspace domain routing for easier account switching
+                    window.open(`https://mail.google.com/a/g.bracu.ac.bd/?view=cm&fs=1&to=gb-bucc@googlegroups.com&su=${subject}`, '_blank');
                 }
-                window.open(gmailUrl, '_blank');
             }
         });
     }
