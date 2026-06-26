@@ -20,7 +20,7 @@ This generator was built to ensure all outgoing HR emails match the precise form
 ## Screenshots
 
 ### Web UI
-![Web UI](assets/screenshots/web_demo.png)
+![Web UI](assets/screenshots/websnap.png)
 
 ### Mobile Android App
 <div style="display: flex; gap: 10px;">
