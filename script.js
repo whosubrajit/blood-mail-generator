@@ -172,8 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // We are in a normal browser
                 const subject = encodeURIComponent(previewSubject.textContent);
                 
-                // If on mobile, use mailto: to trigger the native Gmail/Email app
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    // Apple devices: explicitly force the Gmail app using its custom URL scheme
+                    window.location.href = `googlegmail:///co?to=gb-bucc@googlegroups.com&subject=${subject}`;
+                } else if (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    // Android and other mobile devices: mailto seamlessly handles Gmail opening
                     window.location.href = `mailto:gb-bucc@googlegroups.com?subject=${subject}`;
                 } else {
                     // On desktop, force Google Workspace domain routing for easier account switching
