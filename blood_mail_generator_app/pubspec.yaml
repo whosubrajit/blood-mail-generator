@@ -1,0 +1,24 @@
+name: blood_mail_generator
+description: A publishable Flutter app for generating BUCC Blood Mails.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # For rich text copying (simulating clipboard)
+  # For nice icons
+  cupertino_icons: ^1.0.2
+  webview_flutter: ^4.14.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/web/
