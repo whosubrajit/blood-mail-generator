@@ -169,9 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     subject: previewSubject.textContent
                 }));
             } else {
-                // We are in a normal browser
+                // We are in a normal browser, open Gmail web compose
                 const subject = encodeURIComponent(previewSubject.textContent);
-                window.location.href = `mailto:gb-bucc@googlegroups.com?subject=${subject}`;
+                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=gb-bucc@googlegroups.com&su=${subject}`, '_blank');
             }
         });
     }
