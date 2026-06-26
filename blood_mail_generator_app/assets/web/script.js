@@ -171,13 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // We are in a normal browser, open Gmail web compose
                 const subject = encodeURIComponent(previewSubject.textContent);
-                const senderEmail = document.getElementById('senderEmail')?.value?.trim();
-                let gmailUrl = 'https://mail.google.com/mail/';
-                if (senderEmail) {
-                    gmailUrl += `u/${encodeURIComponent(senderEmail)}/`;
-                }
-                gmailUrl += `?view=cm&fs=1&to=gb-bucc@googlegroups.com&su=${subject}`;
-                window.open(gmailUrl, '_blank');
+                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=gb-bucc@googlegroups.com&su=${subject}`, '_blank');
             }
         });
     }
