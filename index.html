@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUCC Blood Mail Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>BUCC Blood Mail Generator</h1>
+            <p>Generate styled blood donation requests for the BUCC Google Group instantly.</p>
+        </header>
+
+        <main class="app-layout">
+            <section class="input-section glass-panel">
+                <h2>Email Details</h2>
+                <form id="emailForm">
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood Group</label>
+                        <input type="text" id="bloodGroup" value="B- (Negative)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount Needed (Optional)</label>
+                        <input type="text" id="amount" value="4 Bags">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Contact Number</label>
+                        <input type="text" id="phone" value="+8801728-293387" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location (Hospital)</label>
+                        <input type="text" id="location" value="Shaheed Suhrawardy Medical College & Hospital, Dhaka" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Patient Reason</label>
+                        <input type="text" id="reason" value="a heart ring operation patient" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date (Optional if ASAP)</label>
+                        <input type="text" id="date" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Time Requirement (Optional)</label>
+                        <input type="text" id="time" value="As Soon As Possible.">
+                    </div>
+                </form>
+            </section>
+
+            <section class="preview-section glass-panel">
+                <h2>Live Preview</h2>
+                
+                <div class="preview-block">
+                    <div class="preview-header">
+                        <span class="label">To:</span>
+                        <div class="copy-group">
+                            <span class="value">gb-bucc@googlegroups.com</span>
+                            <button class="copy-btn" data-copy="gb-bucc@googlegroups.com">Copy</button>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-header">
+                        <span class="label">Subject:</span>
+                        <div class="copy-group">
+                            <span class="value" id="previewSubject"></span>
+                            <button class="copy-btn" id="copySubjectBtn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-body-container">
+                    <div class="preview-body-header">
+                        <span class="label">Body (Rich Text):</span>
+                        <button class="copy-btn primary" id="copyBodyBtn">Copy Rich Text for Gmail</button>
+                    </div>
+                    <div class="preview-content" id="previewBody">
+                        <!-- HTML content generated here -->
+                    </div>
+                    <div class="helper-text">
+                        * Note: To preserve the colors and bold text in Gmail, use the "Copy Rich Text for Gmail" button and paste it directly into your email composition window.
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

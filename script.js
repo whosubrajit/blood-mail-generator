@@ -1,0 +1,170 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Inputs
+    const bloodGroupInput = document.getElementById('bloodGroup');
+    const locationInput = document.getElementById('location');
+    const phoneInput = document.getElementById('phone');
+    const reasonInput = document.getElementById('reason');
+    const dateInput = document.getElementById('date');
+    const amountInput = document.getElementById('amount');
+    const timeInput = document.getElementById('time');
+
+    // Outputs
+    const previewSubject = document.getElementById('previewSubject');
+    const previewBody = document.getElementById('previewBody');
+
+    // Buttons
+    const copySubjectBtn = document.getElementById('copySubjectBtn');
+    const copyBodyBtn = document.getElementById('copyBodyBtn');
+
+    function updatePreview() {
+        const bg = bloodGroupInput.value || '[Blood Group]';
+        const loc = locationInput.value || '[Location]';
+        const ph = phoneInput.value || '[Phone]';
+        const rs = reasonInput.value || '[Reason]';
+        const dt = dateInput.value.trim();
+        const am = amountInput.value.trim();
+        const tm = timeInput.value.trim();
+
+        // Update Subject
+        const subjectText = `[GB-BUCC] Emergency ${bg} blood needed at ${loc}.`;
+        previewSubject.textContent = subjectText;
+        
+        // Build details array
+        const details = [];
+        details.push(`<strong>Blood Type:</strong> <span style="color: red; font-weight: bold;">${bg}</span>`);
+        if (am) details.push(`<strong>Amount :</strong> <span style="color: red; font-weight: bold;">${am}</span>`);
+        details.push(`<strong>Contact Number:</strong> <span style="color: blue; font-weight: bold;">${ph}</span>`);
+        details.push(`<strong>Location:</strong> <span style="color: blue; font-weight: bold;">${loc}</span>`);
+        if (dt) details.push(`<strong>Date:</strong> <span style="color: red; font-weight: bold;">${dt}</span>`);
+        if (tm) details.push(`<strong>Time:</strong> <span style="color: red; font-weight: bold;">${tm}</span>`);
+
+        const detailsHtml = details.join('<br>');
+
+        // Update Body (HTML with inline styles for Gmail)
+        const bodyHTML = `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000000;">Greetings,<br>Emergency <span style="color: red; font-weight: bold;">${bg}</span> blood needed for <span style="font-weight: bold;">${rs}</span> at <span style="color: blue; font-weight: bold;">${loc}</span>. If anyone is available, please contact <span style="color: blue; font-weight: bold;">${ph}</span> as soon as possible. Thank you.<br><br><div style="font-size: 18px; line-height: 1.6;"><span style="text-decoration: underline; font-weight: bold;">DETAILS:</span><br>${detailsHtml}</div></div>`;
+        previewBody.innerHTML = bodyHTML;
+    }
+
+    // Attach event listeners to all inputs
+    const inputs = [bloodGroupInput, locationInput, phoneInput, reasonInput, dateInput, amountInput, timeInput];
+    inputs.forEach(input => {
+        input.addEventListener('input', updatePreview);
+    });
+
+    // Initial render
+    updatePreview();
+
+    // Copy handlers
+    function handleCopy(button, textToCopy, isHtml = false) {
+        const originalText = button.textContent;
+        
+        if (isHtml) {
+            // Copy rich text
+            try {
+                const blobHtml = new Blob([textToCopy], { type: "text/html" });
+                const blobText = new Blob([previewBody.innerText], { type: "text/plain" });
+                const data = [new ClipboardItem({
+                    "text/html": blobHtml,
+                    "text/plain": blobText,
+                })];
+
+                navigator.clipboard.write(data).then(() => {
+                    showSuccess(button);
+                }).catch(err => {
+                    console.error('Failed to copy rich text via ClipboardItem: ', err);
+                    fallbackCopyHtmlToClipboard(textToCopy, button);
+                });
+            } catch (err) {
+                console.error('ClipboardItem not supported, using fallback: ', err);
+                fallbackCopyHtmlToClipboard(textToCopy, button);
+            }
+        } else {
+            // Copy plain text
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showSuccess(button);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                fallbackCopyTextToClipboard(textToCopy, button);
+            });
+        }
+
+        function showSuccess(btn) {
+            btn.textContent = 'Copied!';
+            btn.classList.add('success');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('success');
+            }, 2000);
+        }
+    }
+
+    function fallbackCopyHtmlToClipboard(htmlText, btn) {
+        // Create a temporary contenteditable div to copy from
+        const tempDiv = document.createElement("div");
+        tempDiv.contentEditable = true;
+        tempDiv.innerHTML = htmlText;
+        tempDiv.style.position = 'fixed';
+        tempDiv.style.left = '-9999px';
+        document.body.appendChild(tempDiv);
+        
+        // Select the text
+        const range = document.createRange();
+        range.selectNodeContents(tempDiv);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        try {
+            document.execCommand('copy');
+            btn.textContent = 'Copied!';
+            btn.classList.add('success');
+            setTimeout(() => {
+                btn.textContent = 'Copy Rich Text for Gmail';
+                btn.classList.remove('success');
+            }, 2000);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        
+        selection.removeAllRanges();
+        document.body.removeChild(tempDiv);
+    }
+
+    function fallbackCopyTextToClipboard(text, btn) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            btn.textContent = 'Copied!';
+            btn.classList.add('success');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('success');
+            }, 2000);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+    }
+
+    // Setup generic copy buttons
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            handleCopy(btn, btn.getAttribute('data-copy'));
+        });
+    });
+
+    copySubjectBtn.addEventListener('click', () => {
+        handleCopy(copySubjectBtn, previewSubject.textContent);
+    });
+
+    copyBodyBtn.addEventListener('click', () => {
+        // Copy the HTML content for rich text pasting in Gmail
+        handleCopy(copyBodyBtn, previewBody.innerHTML, true);
+    });
+});
