@@ -58,11 +58,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BUCC Blood Mail Generator'),
-        backgroundColor: Colors.red[800],
-        foregroundColor: Colors.white,
-      ),
+      backgroundColor: const Color(0xFF0F172A), // Match web background color
       body: SafeArea(
         child: WebViewWidget(controller: _controller),
       ),
