@@ -8,7 +8,7 @@ A fast, client-side web application designed for the BUCC (BRAC University Compu
 - **Dynamic Fields:** Automatically formats the Subject line and inserts the Blood Group, Location, Contact Number, Patient Reason, Date, and Amount into the email template.
 
 ## How to Use
-1. Open the `index.html` file in any modern web browser (or visit the hosted GitHub Pages link).
+1. Download the APK from Release or simply visit <a href = https://bucc-mail.vercel.app/>BUCC Blood Mail Generator </a>.
 2. Fill out the input fields on the left. (Note: Date, Amount, and Time are optional depending on the urgency).
 3. Click **Copy Rich Text for Gmail** and paste it directly into your Gmail composition window.
 
