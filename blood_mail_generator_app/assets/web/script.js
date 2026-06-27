@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = 'Copied!';
             btn.classList.add('success');
             setTimeout(() => {
-                btn.textContent = 'Copy Rich Text for Gmail';
+                btn.textContent = 'Copy Text';
                 btn.classList.remove('success');
             }, 2000);
         } catch (err) {
