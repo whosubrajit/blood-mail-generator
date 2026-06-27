@@ -1,7 +1,7 @@
 name: blood_mail_generator
 description: A publishable Flutter app for generating BUCC Blood Mails.
 publish_to: 'none'
-version: 1.2.1+8
+version: 1.2.2+9
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
